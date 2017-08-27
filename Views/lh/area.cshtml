@@ -1,0 +1,44 @@
+﻿@model List<ListHell.CODE.Area>
+@{
+    ViewBag.Title = "select area";
+}
+<script src="~/Scripts/cookies.js"></script>
+<span style="color:red;font-size:small;padding-top:20px;">To Post an ad OR to view ads. Select Area</span>
+
+<div class="container" style="background-color:#f2f2f2;opacity:0.5">
+    @foreach (var x in Model)
+    {
+        <div  class="col-xs-3 col-md-7 col-sm-6 col-lg-1"    style="margin:10px 10px 10px 10px; display:inline-block">
+            <a class="cscountry-@x.Areas" onclick="save('area','@x.Areas')" href="../@x.Areas/cities"> @x.Areas</a>
+        </div>}
+</div>
+
+<style>
+
+
+    @{
+        for (int x = 0; x < Model.Count(); x++)
+        {
+
+       @: .cscountry-@Model.ElementAt(x).Areas::before
+
+            @:{
+                @:content: url('../Icons/@Model.ElementAt(x).Areas@(".png")' )
+             @:}
+   }
+    }
+
+
+
+
+
+</style>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnPost").remove();
+
+    })
+</script>
+
+

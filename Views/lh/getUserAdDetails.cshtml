@@ -1,0 +1,144 @@
+﻿@model ListHell.CODE.UserDetailedAd
+
+@{
+    ViewBag.Title = "getUserAdDetails";
+}
+
+<h2>getUserAdDetails</h2>
+
+<div>
+    <h4>UserDetailedAd</h4>
+    <a href="GetAdsByUsers">GO BACK TO YOUR ADS</a>
+    <hr />
+    <dl class="dl-horizontal">
+        
+
+        <dt>
+            @Html.DisplayNameFor(model => model.userid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.userid)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.master_cat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.master_cat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.locname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.locname)
+        </dd>
+
+    </dl>
+    @foreach(var v in Model.images)
+    {
+        <hr />
+
+        if (v.defaulti == true)
+        { <img style="border:dotted;border-width:thick;border-color:red" src="@v.src" id="@v.imageid" data-val="@v.adid" />
+            <span>default image</span>
+        }
+        else
+        {
+            <img  src="@v.src" id="@v.imageid" data-val="@v.adid" />
+        <a href="removeImage?adid=@v.adid&imgid=@v.imageid&adid=@Model.adid&catid=@Model.catid&lid=@Model.lid">Remove</a>
+       
+        }
+    }
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            $("#gb").remove();
+            if (getParameterByName("os") == "false")
+                alert("something went wrong. Please try later");
+            else if(getParameterByName("os")=="true") {
+                alert("image deleted");
+            }
+        })
+        function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }    </script>}

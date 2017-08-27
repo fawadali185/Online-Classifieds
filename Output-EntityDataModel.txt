@@ -1,0 +1,7 @@
+﻿Generated model file: EFLH.edmx.
+Loading metadata from the database took 00:00:02.5558255.
+Generating the model took 00:00:05.6482224.
+Generated model file: EFLH.edmx.
+Loading metadata from the database took 00:00:02.6662230.
+Generating the model took 00:00:04.6546370.
+The 'data source' keyword is not supported.

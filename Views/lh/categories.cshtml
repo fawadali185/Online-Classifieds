@@ -1,0 +1,959 @@
+﻿﻿@model List<ListHell.CODE.Categories>
+@{
+    ViewBag.Title = "categories";
+}
+<style>
+    .expand-ul{
+        /*width:200px;*/
+    }
+    body {
+    }
+
+    .AdImage {
+        height: 45px;
+        width: 100%;
+    }
+
+    .Ad {
+        width: 80px;
+    }
+
+    .AdCaption {
+        height: 35px;
+        width: 100% !important;
+        font-size: x-small;
+    }
+
+    .Container2 {
+        border-top: 1px #CCCCCC solid;
+        padding-left: 30px;
+        padding-right: 20px;
+        position: relative;
+        background-color: white;
+        border-color: burlywood !important;
+        width: 1140px;
+    }
+
+    .AdsWrap {
+        overflow: hidden;
+        height: 130px;
+        background-color:#edd7d9;
+    }
+
+    .AdsList {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        transition: left 600ms ease-in-out;
+        display: -ms-flexbox;
+        height: 100px;
+    }
+
+    .move_AL {
+        left: -300px;
+    }
+
+    .Button {
+        text-indent: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 0;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAAAcCAMAAADBVciIAAAAdVBMVEUAAACzmYCkn5a4raOZmZnz8++amprs7OyYmJjT09OampqZmZmYmJiZmZmXnZfl6NT5+fn4+PjU2L/Pz8/S1cbMzMz6+vqZmZny8vPLy8v+/v739/i9vb3ExMTs7e2vrq/n5ubh4OO2t7bZ2dmmpqagoKDS0tauycZeAAAAF3RSTlMACjgZ8T7h4NTSv6WBc1tZuYnCn4dzZwiFhWQAAAF+SURBVEjHtZbZdsIgFEXbqm3t4NDpcqMJECD//4mlGTgBXJWlyx19OQ8nyWJzyV3O/eeJ7LUsW+zzbLXmLHt4pKJs9SSy235xx2n2RkQl2V4Ikd523RnDSfbsnKM0I0/2eFnhN3cmLXxfOmstJRllhT+NSAsXH53RHp5nL85KD0UZ9UTZToi0cMtGebRiZJullT00zygr3DZiZCaL0U3TKP9niOFkO0DIKABZRACymGaCgxj2OEGQBWA1wCSLUch4FMPJIwohC4AsYJRFH2bwIIY81oAgC8DjgUEWVVWHcFXci9Eycx0ugiwAsoA/WfShimAvhqw5giALgCzAy6KqBN4sJScQZAGQ5WxhW15421fGooBxUaiNC/vsxKIIcFabmjn8irWB2CicxLYtPCwWG1tPhwxbT16y9TAcVOOJh4OdKv8dDlibfHx5kvGFaVM+vjBgtVbZgJUXDthBIBNP7F4WGwqRJYUQqOyQsrb0kCo9Rl3xMXrjg/76T5HdLzIsbg2wLP9LAAAAAElFTkSuQmCC);
+        background-position: 0 0;
+        background-repeat: no-repeat;
+        outline-width: 0;
+        outline: none;
+        background-color: #FFFFFF;
+        border: 0;
+        cursor: pointer;
+        height: 28px;
+        margin-top: -14px;
+        padding: 0;
+        position: absolute;
+        top: 50%;
+        width: 20px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .Button__prev {
+        left: 0;
+    }
+
+
+
+    .Button__next {
+        right: 0;
+        -ms-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        padding-left: 10px;
+    }
+
+
+
+
+
+
+
+    .col-1 {
+        float: left;
+        padding-top: 5px;
+        width: 50%;
+    }
+
+    .col-2 {
+        float: right;
+        width: 50%;
+    }
+
+    .first-links {
+        margin: 15px 0;
+    }
+
+    .cat-post {
+        background-position: -25px 0;
+    }
+
+    .icon {
+        background: transparent url(../img/sprite.png) no-repeat 0 0;
+        float: left;
+        height: 25px;
+        margin: 0 10px 0 5px;
+        width: 25px;
+    }
+
+    .cat-post {
+        background-position: -25px 0;
+    }
+
+    .icon-link {
+        font-family: Larsseit,"Helvetica Neue",Helvetica,Arial,Sans-serif;
+        line-height: 1.6em;
+    }
+
+        .icon-link > div {
+            font: 13px/16px "Helvetica Neue",Helvetica,Arial,sans-serif;
+            color: #333;
+            float: left;
+            margin: 5px 0 0 5px;
+        }
+
+    .cat-all {
+        font-size: small;
+    }
+
+    .AdsList > li {
+        padding-right: 25px;
+    }
+
+    /*@@media (max-width: 1090px) {
+        .Container2 {
+            width: inherit !important;
+        }
+    }
+
+    @@media (max-width: 600px) {
+        .Container2 {
+            width: 200px !important;
+        }
+    }*/
+       @@media (max-width: 1190px) {
+          .Container2 {
+            width: 1000px !important;
+           height:inherit;
+        }
+        #btnPost {
+        width:30px;
+        height:20px;
+        font-size:x-small;
+        
+        }
+    }
+    @@media (max-width: 1020px) {
+          .Container2 {
+            width:900px !important;
+            height:inherit;
+        }
+    }
+
+    @@media (max-width: 920px) {
+           .Container2 {
+            width:800px !important;
+            height:inherit;
+        }
+    }
+
+    @@media (max-width: 820px) {
+      .Container2 {
+            width:700px !important;
+            height:inherit;
+        }
+         }
+
+    @@media (max-width: 750px) {
+           .Container2 {
+            width:620px !important;
+            height:inherit;
+        }
+    }
+
+    @@media (max-width: 680px) {
+           .Container2 {
+            width:560px !important;
+            height:inherit;
+        }
+    }
+
+    @@media (max-width: 600px) {
+       .Container2 {
+           height:inherit;
+            width:480px !important;
+        }
+    }
+
+    @@media (max-width: 500px) {
+           .Container2 {
+            width:380px !important;
+        }
+    }
+
+    @@media (max-width: 400px) {
+           .Container2 {
+            width:280px !important;
+        }
+    }
+</style>
+
+<script>
+    //function getdata() {
+    //    $(document).ready(function () {
+    //        $.getJSON('getCitiesForArea', { 'area': $("#ddlA").val() }).done(
+    //           function (data) {
+    //               $('#ddlC')
+    //               .find('option')
+    //               .remove();
+    //               var options = $("#ddlC");
+    //               options.append($("<option />").val("-1").text("Select City _________________________________V"));
+    //               $.each(data, function () {
+    //                   options.append($("<option />").val(this.city).text(this.city));
+    //               });
+    //           });
+    //    });
+    //}
+
+
+
+
+    var ec = 0;
+    
+    var rtime;
+    var timeout = false;
+    var delta = 200;
+    var ini = 0;
+    var f = false;
+    var z = "";
+    function resizeend() {
+        if (new Date() - rtime < delta) {
+            setTimeout(resizeend, delta);
+        } else {
+            timeout = false;
+            maxh = $(".AdsList").width();            //         
+            ec = $(".AdsWrap").children().children().filter(function () {
+                if ($(this).position().left + $(this).width() < maxh) {
+                 //   z = $(this).attr("rid"); not working
+                  return true;
+                }
+            }).length;
+            move = 0;
+            if (tec == 0) {
+                
+                tec = 0;//fix this
+
+              
+            }
+            else {
+                //todays
+                
+                //  tec = tec - (ini - ec);
+                tec = tec - ( ec);
+                
+            }
+   
+            ini = ec;
+            if (f == true) {
+                i = ec;
+                f = false;
+            }
+            else {
+                f = true;
+            }
+
+            if (i > ec) {
+               
+            }
+            else {
+                move = ec - i;
+                var p = $(".AdsList").position();
+                $(".AdsList").attr("style", "left:" + (p.left - 30.16 + move * 61.16) + "px");
+
+            }
+           
+        }
+    }
+    var i = 0;
+    $(document).ready(function () {
+        f = false;
+        tec = 0;
+        maxh = $(".AdsList").width();            //         
+        ec = $(".AdsWrap").children().children().filter(function () {
+            //get last rid
+            if ($(this).position().left + $(this).width() < maxh) {
+                lst = parseInt($(this).attr("rid"));
+                return true;
+            }
+        }).length;
+        ini = ec;
+        i = ec;
+        
+        if (window.attachEvent) {
+            window.attachEvent('onresize', function () {
+                // alert('attachEvent - resize');
+            });
+        }
+        else if (window.addEventListener) {
+            window.addEventListener('resize', function () {
+                rtime = new Date();
+                if (timeout === false) {
+                    timeout = true;
+                    setTimeout(resizeend, delta);
+                }
+            }, true);
+        }
+        else {
+            //The browser does not support Javascript event binding
+        }
+    });  
+
+    var move = 0;
+    var tec = 0;
+    function getMove() {
+        if (i > ec) {
+         
+            //   move = ini - ec;
+            move = i - ec;
+        }
+        else if (i < ec) {
+            ///  move = ini + (ec - ini);
+          //  move = ini + (ec - i);
+            move = i + (ec - i);
+        }
+        else {
+     
+            if (tec < ec) {
+                move = ec - tec;
+               // move = 0;
+                
+
+            }
+            else {
+                move = ec;
+            }
+        }
+     
+        return move;
+    }
+    function moveR() {
+        $(document).ready(function () {
+           
+            move = 0;
+            getMove();
+          
+        
+
+            //if ((tec + ec) <= 36) {
+                
+            //    //tec += ec;
+            //    tec += move;
+            //    move = 0;
+               
+            //}
+
+            if ( (tec + ec) <= 36-ec) {
+                var p = $(".AdsList").position();
+                $(".AdsList").attr("style", "left:" + (p.left - 30.16 - move * 61.16).toString() + "px");
+                tec += move;
+                move = 0;
+                // lst = lst + ec;
+
+            }
+            else {
+                move = 36 - tec;
+                move = 0;
+
+                //// return;
+            }
+        });
+    }
+    var t = 0;
+    function moveL() {
+        $(document).ready(function () {
+            move = 0;
+           
+            getMove();
+           
+         if (tec-ec >0 || tec>=ec) {
+                var p = $(".AdsList").position();
+                $(".AdsList").attr("style", "left:" + (p.left - 30.16 + move * 61.16) + "px");
+                tec -= move;
+                
+                move = 0;
+         }
+
+        // if (tec - ec >= 0) { tec -= ec; }
+
+         else {
+             move = ec - tec;
+             //window.console.log(move);
+             ////return
+         }
+         });
+    }
+</script>
+<div class="" style="display:inline-grid">
+    @if (Request.QueryString["isPost"] == null)
+    {
+        <div class="top-links first-links">
+            <div class="col-1">
+                <div class="icon-link">
+                    <div class="icon cat-post"></div>
+                    <a href="categories?isPost=true" class="post-ad-begin" data-btn-loc="hp-left" rel="nofollow">post a classified ad</a>
+                    <div>- fast &amp; easy</div>
+                </div>
+            </div>
+            @*<div class="col-2">
+                <div class="icon-link all-ads">
+                    <div class="icon cat-all"></div>
+                    <h6>
+                        <a href="">
+                            all new ads in Calgary
+                        </a>
+                    </h6>
+                </div>
+            </div>*@
+        </div>
+
+        <div style="width:inherit;height:160px;">
+            <div class="Container2" data-reactroot="" data-reactid="1">
+                <button class="Button Button__prev hpgButton__disabled" onclick="moveL();"
+                        tabindex="-1" title="Previous" data-reactid="2">
+                    Previous
+                </button>
+                <button class="Button Button__next" onclick="moveR();" tabindex="-1" title="Next" data-reactid="3">Next</button>
+                <span style="font-size:x-small;color:red"><b>Your ad here in this slider, this feature coming soon</b></span>
+                <div class="AdsWrap" data-reactid="4">
+                    <ul class="AdsList" data-reactid="5" style="left:-0px;right:0px">
+                        @*@foreach (ListHell.CODE.AdsModel v in ViewBag.g)
+                            {
+                                <li class="Ad">
+                                    <a href="addetails?adid=@v.adid&catid=@v.catid&lid=@v.lid"
+                                       class="AdLink" title="Caterpillar Dpf Delete Kit" tabindex="-1">
+                                        <div class="AdImageContainer">
+                                            <img class="AdImage" src="@v.src"
+                                                  >
+                                        </div>
+                                        <span class="AdCaption AdCaption__title">@v.title.Substring(0, 20) </span>
+                                        <span class="AdCaption AdCaption__price"><span>@v.amount</span></span>
+                                    </a>
+                                </li>
+                            }*@
+                        <li rid="1" class="Ad">
+                            <a href=""
+                               class="AdLink" title="1" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                           <li rid="2" class="Ad">
+                            <a href=""
+                               class="AdLink" title="2" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="3" class="Ad">
+                            <a href=""
+                               class="AdLink" title="3" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="4" class="Ad">
+                            <a href=""
+                               class="AdLink" title="4" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="5" class="Ad">
+                            <a href=""
+                               class="AdLink" title="5" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="6" class="Ad">
+                            <a href=""
+                               class="AdLink" title="6" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="7" class="Ad">
+                            <a href=""
+                               class="AdLink" title="7" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="8" class="Ad">
+                            <a href=""
+                               class="AdLink" title="8" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="9" class="Ad">
+                            <a href=""
+                               class="AdLink" title="9" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="10" class="Ad">
+                            <a href=""
+                               class="AdLink" title="10" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="11" class="Ad">
+                            <a href=""
+                               class="AdLink" title="11" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="12" class="Ad">
+                            <a href=""
+                               class="AdLink" title="12" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="13" class="Ad">
+                            <a href=""
+                               class="AdLink" title="13" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="14" class="Ad">
+                            <a href=""
+                               class="AdLink" title="14" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="15" class="Ad">
+                            <a href=""
+                               class="AdLink" title="15" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="16" class="Ad">
+                            <a href=""
+                               class="AdLink" title="16" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="17" class="Ad">
+                            <a href=""
+                               class="AdLink" title="17" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="18" class="Ad">
+                            <a href=""
+                               class="AdLink" title="18" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+
+                  
+
+                        <li rid="19" class="Ad">
+                            <a href=""
+                               class="AdLink" title="19" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="20" class="Ad">
+                            <a href=""
+                               class="AdLink" title="20" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="21" class="Ad">
+                            <a href=""
+                               class="AdLink" title="21" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="22" class="Ad">
+                            <a href=""
+                               class="AdLink" title="22" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="23" class="Ad">
+                            <a href=""
+                               class="AdLink" title="23" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="24" class="Ad">
+                            <a href=""
+                               class="AdLink" title="24" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="25" class="Ad">
+                            <a href=""
+                               class="AdLink" title="25" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="26" class="Ad">
+                            <a href=""
+                               class="AdLink" title="26" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="27" class="Ad">
+                            <a href=""
+                               class="AdLink" title="27" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="28" class="Ad">
+                            <a href=""
+                               class="AdLink" title="28" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="29" class="Ad">
+                            <a href=""
+                               class="AdLink" title="29" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="30" class="Ad">
+                            <a href=""
+                               class="AdLink" title="30" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="31" class="Ad">
+                            <a href=""
+                               class="AdLink" title="31" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="32" class="Ad">
+                            <a href=""
+                               class="AdLink" title="32" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="33" class="Ad">
+                            <a href=""
+                               class="AdLink" title="33" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="34" class="Ad">
+                            <a href=""
+                               class="AdLink" title="34" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="35" class="Ad">
+                            <a href=""
+                               class="AdLink" title="35" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                        <li rid="36" class="Ad">
+                            <a href=""
+                               class="AdLink" title="36" tabindex="-1">
+                                <div class="AdImageContainer">
+                                    <img class="AdImage" src="~/ai/_0d9f4b50-5382-4642-9eb6-faa055c524cb_Suzuki.JPG">
+                                </div>
+                                <span class="AdCaption AdCaption__title">This is title </span>
+                                <span class="AdCaption AdCaption__price"><span>$20,000</span></span>
+                            </a>
+                        </li>
+                       
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="" style="display:inline-grid;width:100%">
+            @Html.Partial("_search")
+          </div>
+            }
+
+            <div class="" style="font-size:small;margin-top:10px">
+                @{string[] sv = new string[10];
+                    string[] icon = new string[10]; int x = 0;}
+                @if (Request.QueryString["isPost"] != null)
+                {
+                    <span style="color:red">
+                        To post an ad. Select one of the Categories from below<a href="categories">(Cancel)</a>
+                    </span>
+                }
+                else
+                {
+
+                    <span style="color:red;margin:20px">To view ads. Select a category from below </span>
+                    <span style="font-size:small;color:blue"><b>These are the categories</b></span>
+                }
+            </div>
+            <div>
+
+                <div style="display:flex;background-color:#f2f2f2;margin-top:20px">
+
+                    @{
+
+                        string ls = "";
+
+                        <ul style="width:100%;padding:25px;margin:25px">
+                            @foreach (var v in Model)
+                            {
+                                if (v.master_category != ls)
+                                {
+                                    sv[x] = v.master_category_icon;
+                                    icon[x] = v.master_category;
+                                    <li style="padding:5px" class="master-cat-@icon[x]">
+                                        <a class="mcatd"  style="font-size:small; cursor:pointer"
+                                            onclick="javascript: $('.expand-ul').slideUp(200).attr('style', 'display:none'); $(this).siblings()
+            .slideDown(200).attr('style', 'margin-left:-20px;display:block;border-width:1px;border-style:solid;padding:10px;');">@v.master_category_descr</a>
+            <div class="expand-ul" style="margin-left:-20px;display:none;border-width:1px;border-style:solid;padding:10px;width:500px">
+                <ul>
+                    @foreach (var a in Model.Where(w => w.master_category == v.master_category))
+                    {
+                        <li>
+                            @if (a.count > 0 || Request.QueryString["isPost"] != null)
+                            {
+                                <a onclick="putCat('@a.lid','@a.master_category','@a.id')" style="font-size:small;">@a.category1</a>
+                            }
+                            else
+                            {
+                                <span>@a.category1</span>
+                            }
+
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </li>
+                                    x++;
+                                }
+                                ls = v.master_category;
+
+                            }
+                        </ul>
+                    }
+
+                </div>
+                <style>
+     @for(int y = 0; y < x; y++) {
+    @:.master-cat-@icon[y]::before { content:url(@sv[y])}
+         }
+ul{
+      list-style-type: none;
+    }
+
+                </style>
+                <script>
+                    function getParameterByName(name, url) {
+                        if (!url) {
+                            url = window.location.href;
+                        }
+                        name = name.replace(/[\[\]]/g, "\\$&");
+                        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                            results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, " "));
+                    }
+                    function putCat(lid, catm, catid) {
+
+                        if (lid == null) {
+                            lid = $.cookie("lid");
+                        }
+
+                        var isPost = getParameterByName("isPost");
+                        save("catid", catid);
+                        save("catm", catm);
+
+                        if (isPost == null) {
+                            window.location = "ads?lid=" + lid + "&catid=" + catid + "&catm=" + catm;
+                        }
+                        else if (isPost == "true") {
+
+
+                            window.location = "post?cat=" + catid + "&lid" + lid + "&catm=" + catm;
+                        }
+                    }
+                </script>
+                <script src="~/Scripts/cookies.js"></script>
+                <style>
+                    a {
+                        cursor: pointer;
+                    }
+                </style>
+            </div>
+        </div>

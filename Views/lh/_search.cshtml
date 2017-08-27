@@ -1,0 +1,89 @@
+﻿
+@using (Html.BeginForm("ads", "lh", "POST"))
+{
+    <div class="container" style="opacity:0.5" >
+        <div class="row" style="width:100%">
+            <div class="col-sm-6 col-md-6 col-lg-3">
+                <input name="search" type="text" style="width:100%;"
+                       placeholder="Search i.e. new toyota" />
+            </div>
+
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <select name="areastr" id="ddlA" style="width:100%;" class="c" onchange="getdata()">
+                    <option value="Select">Select Area </option>
+                    @foreach (ListHell.CODE.Area v in ViewBag.area)
+                    {
+                        <option value="@v.Areas">
+                            @v.Areas
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <select name="city" id="ddlC" onchange="lidS(this);" style="width:100%;" class="c">
+                    <option value="Select">
+                        Select City
+                    </option>
+                </select>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <input type="submit" style="width:100%"
+                       value="Search" />
+            </div>
+
+
+        </div>
+    </div>
+}
+
+<script>
+    function getdata() {
+        $(document).ready(function () {
+
+            $.getJSON('getCitiesForArea', { 'area': $("#ddlA").val() }).done(
+               function (data) {
+                   $('#ddlC')
+                   .find('option')
+                   .remove();
+                   var options = $("#ddlC");
+                   options.append($("<option />").val("-1").text("Select City _________________________________V"));
+                   $.each(data, function () {
+                       options.append($("<option />").val(this.city).text(this.city));
+                   });
+               });
+        });
+    }
+    var _c;
+		 $(document).ready(function () {
+			$("#ddlA").val($.cookie("area"));
+            $.getJSON('getCitiesForArea', { 'area': $.cookie("area") }).done(
+               function (data) {
+                   c = data;
+                   $('#ddlC')
+                   .find('option')
+                   .remove();
+                   var options = $("#ddlC");
+                   options.append($("<option />").val("-1").text("Select City _________________________________V"));
+                   $.each(data, function () {
+                       options.append($("<option />").val(this.city).text(this.city));
+                   });
+                   
+                   //save("lid", catid);
+				   	$("#ddlC").val($.cookie("city"));
+               });
+
+		 });
+
+		 function lidS(v) {
+		     
+		     for (var i = 0; i < c.length; i++) {
+		         // look for the entry with a matching `code` value
+		         if (c[i].city == $("#ddlC").val()) {
+		             save("lid", c[i].id);
+		             save("city", c[i].city);
+		             
+		         }
+		     }
+		 }
+
+</script>

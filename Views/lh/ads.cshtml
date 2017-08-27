@@ -1,0 +1,190 @@
+﻿@model IEnumerable<ListHell.CODE.AdsModel>
+
+@{
+    ViewBag.Title = "ads";
+}
+<br />
+<br />
+
+<style>
+    @@media (max-width:650px){
+        .info-c{display:none;}
+        .img{
+            width:30px !important;
+        }
+        .title{
+            font-size:x-small;
+        }
+        .btn_VP{
+            width:30px;
+            font-size:xx-small;
+        }
+        .ph{
+            font-size:small;
+        }
+       
+    }
+</style>
+<div class="" style="display:inline-grid;width:100%;font-size:small;background-color:#edd7d9">
+    @Html.Partial("_search")
+    </div>
+ 
+    @*<span style="font-size:x-small">To Post an ad. Click on <span style="color:red">Go Back </span> lin</span>*@
+    <br />
+
+    <ul style="width:100%; font-size:small;background-color:#f2f2f2">
+
+        @foreach (var v in Model)
+        {
+            <li class="ch">
+                <div class="img"><img style="width:inherit" src="@v.src" /></div>
+                <div class="info">
+                    <div class="title" style="font-size:medium"><a href="addetails?adid=@v.adid&catid=@v.catid&lid=@v.lid"> @v.title</a></div>
+                    <span class="info-c">
+                        @v.descr
+                    </span>
+
+                    <span class="amount">
+                        @String.Format("{0:C}", v.amount)<br>
+                        <input type="button" class="btn_VP" 
+                               onclick="javascript: $(this).siblings('span').attr('style', 'font-size:small');$(this).remove()"
+                                value="View Phone" /><span class="ph" style="display:none">Contact: @v.phone</span>
+                        <br />
+                    </span>
+
+                </div>
+
+            </li>
+
+        }
+    </ul>
+    <ul>
+        @{
+            string c = ViewBag.paging;
+            int count = Convert.ToInt32(c.Split(',')[0]);
+            int cp = Convert.ToInt32(c.Split(',')[1]);
+            int cp1 = cp;
+            if (cp == 0) { cp = 1; }
+            bool st = false;
+            int ic = 0;
+            int start = 1;
+            if (cp <= 6) { start = 0; }
+            else { start = cp - 3; }
+            for (int x = start; x < (count / 10) + 1; x++)
+            {
+
+
+                if (cp > 6)
+                {
+                    ic++;
+                    if (st == false)
+                    {
+
+                        <li class="p">...</li>
+                        <li class="p"><a href="ads?catid=@ViewBag.ct&lid=@ViewBag.lid&pn=@x"> @x</a></li>//change the cp
+                    }
+                    else
+                    {
+                        if (ic > 5 && (count / 10) > cp + 3)
+                        {
+    <li class="p">...</li>
+                            break;
+                        }
+                        else
+                        {
+                            <li class="p"><a href="ads?catid=@ViewBag.ct&lid=@ViewBag.lid&pn=@x"> @x</a></li>//change the cp
+                        }
+                    }
+
+                    st = true;
+
+                }
+                else
+                {
+
+                    if (ic <= 6)
+                    {
+                        <li class="p"><a href="ads?catid=@ViewBag.ct&lid=@ViewBag.lid&pn=@x ">@(x + 1)</a></li>//change the cp
+                    }
+                    else
+                    {
+                        if (count / 10 > cp + 3)
+                        {
+                            <li class="p">....</li>
+                        }
+                        else
+                        {
+                            <li class="p"><a href="ads?catid=@ViewBag.ct&lid=@ViewBag.lid&pn=@x ">@(x + 1)</a></li>//change the cp
+                        }
+                    }
+                    ic++;
+
+                }
+
+
+            }
+        }
+    </ul>
+
+    @section Scripts {
+        <script>
+
+            $(document).ready(function () {
+
+                $(".p:contains('@(cp1 + 1)')").attr("style", "font-size:20px;background-color:red");
+
+
+            });
+        </script>}
+    <style>
+        .p {
+            display: inline-block;
+            padding: 10px;
+        }
+
+        .img {
+            width: 40px;
+            height: 40px;
+            position: inherit;
+            display: inline-block;
+        }
+
+        .info {
+            display: inline-block;
+            vertical-align: top;
+            width: 80%;
+            padding-left: 10px;
+            background-color: #f2f2f2;
+        }
+
+        .ch {
+            position: relative;
+        }
+
+        h3 {
+            height: 10px;
+        }
+
+        .info-c {
+            font-size: small;
+            width: 70%;
+            position: inherit;
+            word-wrap: break-word;
+            padding-left: 10px;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+
+        .amount {
+            padding: 20px;
+        }
+
+        ul {
+            list-style: none;
+        }
+    </style>
+    @*<script>
+        </script>*@
+
+
+

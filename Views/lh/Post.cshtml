@@ -1,0 +1,160 @@
+﻿@model ListHell.CODE.PostModel
+
+@{
+
+}
+
+<span style="font-size:medium;color:red"> <a href="categories">(Cancel)</a></span>
+@*@{Html.EnableClientValidation();
+
+
+    if (ViewContext.ViewData.ModelState.ContainsKey("{key}")) { ViewContext.ViewData.ModelState["{key}"].Errors.Clear(); }
+}*@
+<div style="background-color:#f2f2f2;">
+    <div class="" >
+        @using (Html.BeginForm("Post", "lh", new
+    {
+        catid = (Request.QueryString["catid"] == null ? null : Request.QueryString["catid"]),
+        lid = (Request.QueryString["lid"] == null ? null : Request.QueryString["lid"].ToString()),
+        catm = (Request.QueryString["catm"] == null ? null : Request.QueryString["catm"].ToString())
+    }, FormMethod.Post, new { enctype = "multipart/form-data", catid = Request.QueryString["catid"] }))
+    {
+            @Html.AntiForgeryToken()
+
+            <div>
+
+
+
+                <hr />
+
+
+                <div class="elementP" style="padding:5px">
+                    @Html.LabelFor(model => model.title, htmlAttributes: new { @class = "control-label col-md-2", style = "   padding-top: 10px;" })
+                    <div class="col-lg-12" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.title, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr />
+                <div class="elementP" style="padding:5px">
+                    @Html.LabelFor(model => model.description,new { htmlAttributes = new { @class = "control-label col-md-2", style = "   padding-top: 10px;" } })
+                    <div class="col-lg-12" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control " } })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr />
+                <div class="elementP" style="padding:5px">
+
+                    <span class="control-label col-sm-1" style="padding-top:10px;">
+                        <b>   @ViewBag.amountText in @ViewBag.symbol</b>
+                    </span>
+                    <div class="col-sm-2" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.amount, new
+               {
+                   htmlAttributes = new
+                   {
+                       @class = "form-control",
+                       style = "padding-top: 10px;"
+                   }
+               })
+                        @Html.ValidationMessageFor(model => model.amount, "", new { @class = "text-danger" })
+
+                    </div>
+                </div>
+                <hr />
+                <div class="elementP" style="padding:5px">
+                    <div class="col-lg-12 " style="padding-top: 10px;">
+                        <h4>Please select Images for your ad</h4>
+                        Main <input type="file" id="image1" name="images" />
+                        Image 2  <input type="file" id="image2" name="images" />
+                        Image 3 <input type="file" id="image3" name="images" />
+                    </div>
+                </div>
+                <hr />
+                <div class="elementP" style="padding:5px">
+                    @Html.LabelFor(model => model.phone, htmlAttributes: new
+               {
+                   @class = "control-label col-sm-1",
+                   style = "   padding-top: 10px;"
+               })
+                    <div class="col-lg-5" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <hr />
+
+                <hr />
+                <div class="elementP" style="padding:5px">
+                    @Html.LabelFor(model => model.email, htmlAttributes: new
+           {
+               @class = "control-label col-sm-1",
+               style = "   padding-top: 10px;"
+           })
+                    <div class="col-lg-5" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <hr />
+
+                <div class="elementP" style="padding:5px">
+                    @Html.LabelFor(model => model.address, htmlAttributes: new { @class = "control-label col-lg-12", style = "   padding-top: 10px;" })
+                    <div class="col-lg-12" style="padding-top: 10px;">
+                        @Html.EditorFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.address, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group" id="ad" style="padding:5px">
+                    @*@Html.Partial("_Autos")*@
+                </div>
+
+                <div class="form-group">
+                    <hr />
+                    <div class="col-md-offset-2 col-md-10" style="padding:5px">
+                        <input type="submit" value="Post" style="width:200px" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+
+    }
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script>
+    $(document).ready(function () {
+
+
+        if (getParameterByName("catm") == "autos") {
+            $.get("getAutosDetails", function (data) {
+                $("#ad").replaceWith(data);
+            });
+        }
+    });
+    function getParameterByName(name, url) {
+        if (!url) {
+            url = window.location.href;
+        }
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+</script>
+<style>
+    a{
+        cursor:pointer;
+    }
+</style>

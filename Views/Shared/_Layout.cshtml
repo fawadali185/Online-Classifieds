@@ -1,0 +1,139 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="~/lh.png" />
+    <title> Listhell.com Free classifieds website</title>
+    @*@Styles.Render("~/Content/css")*@
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+    <script>
+        $(document).ready(function () {
+
+            $("a[class!='mcatd']").click(function () {
+                $("#overlay").css("display", "block");
+
+            })
+        })
+    </script>
+    <style>
+        #overlay {
+            position: fixed; /* Sit on top of the page content */
+            display: none; /* Hidden by default */
+            width: 100%; /* Full width (cover the whole page) */
+            height: 100%; /* Full height (cover the whole page) */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+            z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+            cursor: pointer; /* Add a pointer on hover */
+        }
+
+        .centerMe {
+            position: absolute;
+            width: 100px;
+            height: 50px;
+            top: 50%;
+            left: 50%;
+            margin-left: -50px; /* margin is -0.5 * dimension */
+            margin-top: -25px;
+            color: white;
+            font-size: larger;
+
+        }
+               @@media (max-width: 1190px) {
+      
+        #btnPost {
+        width:30px !important;
+        position:fixed;
+        height:20px;
+        font-size:xx-small;
+        
+        }
+    }
+    @@media (max-width: 750px) {
+      
+        #btnPost {
+       width:200px;
+        
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="overlay" onclick="off()">
+        <span class="centerMe">Loading. Please wait...</span>
+    </div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Listhell.com", "area", "lh", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Change area", "area", "lh", new { c = "true" }, null)</li>
+
+                    @*@if (Request.Cookies["city"] != null)
+                    {
+                        <li>
+                            <a>
+
+                                location:@Server.UrlDecode(Request.Cookies["city"].Value)
+                            </a>
+                        </li>
+                    }*@
+
+                    <li><a id="gb" style="cursor:pointer;color:red;font-size:14px" onclick="javascript: history.go(-1);">Go Back</a></li>
+                </ul>
+                @if (((RazorView) ViewContext.View).ViewPath == "~/Views/lh/categories.cshtml" || ((RazorView) ViewContext.View).ViewPath == "~/Views/lh/ads.cshtml" || ((RazorView) ViewContext.View).ViewPath == "~/Views/lh/addetails.cshtml")
+                {
+                    <input id="btnPost" type="button" class="btn-primary" style="width:200px;margin-left:200px;" value="Post an ad" onclick="javascript:window.location='../lh/categories?isPost=true'" />}
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @*@{
+                var identity = (System.Security.Claims.ClaimsIdentity) User.Identity;
+                identity.Claims.Where(c => c.Type == System.IdentityModel.Claims.ClaimTypes.Name)
+                       .Select(c => c.Value).SingleOrDefault());
+
+
+            }*@
+        @RenderBody()
+        <hr />
+        <br>
+        <footer style="">
+            <p>&copy; @DateTime.Now.Year - Listhell.com</p>
+        </footer>
+    </div>
+    @RenderSection("Scripts", false)
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+
+
+    <style>
+        footer {
+            clear: both;
+            position: relative;
+            z-index: 10;
+            height: 3em;
+            margin-top: -3em;
+        }
+    </style>
+</body>
+
+</html>

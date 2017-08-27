@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <style>
+        .box img {
+            -webkit-transition: 10s;
+           
+        }
+
+            .clicked {
+                margin-left: 500px;
+            }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script>
+$(document).ready(function(){
+ $('.box img').on('click', function() {
+    $(this).addClass('clicked');
+});
+
+})
+function abc() {
+    $(document).ready(function () {
+        $("img").addClass('clicked');
+    })
+}
+    
+    </script>
+</head>
+<body>
+    <input type="button"  value="click" onclick="abc();"/>
+    <div class="box">
+        <img src="https://www.google.com/images/srpr/logo11w.png" width="100" />
+    </div>
+</body>
+</html>

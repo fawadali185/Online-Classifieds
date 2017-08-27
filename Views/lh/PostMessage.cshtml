@@ -1,0 +1,43 @@
+﻿@model ListHell.CODE.PostModel
+@{
+    ViewBag.Title = "PostMessage";
+}
+
+<h2>@ViewBag.PostMessage</h2>
+<span>@Html.ActionLink("Go to Main Page","area")</span>
+<fieldset>
+    <legend>Ad's details you Posted</legend>
+    <div class="col-lg-12">
+       Title: @Html.DisplayFor(model => model.title, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-lg-12">
+        Phone: @Html.DisplayFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-lg-12">
+        Address: @Html.DisplayFor(model => model.address, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-lg-12">
+        Amount: @Html.DisplayFor(model => model.amount, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-lg-12">
+        Descr.: @Html.DisplayFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <div class="col-lg-12">
+       Images:
+        @{int x = 0;};
+        @foreach(var v in (List<string>)Session["lstImg"]) {
+            x++;            
+            <img src="@v" class="col-lg-4" style="width:100px;height:100px"  />
+        }
+    </div>
+</fieldset>
+
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+
+            $("#gb").remove();
+        })
+    </script>
+    }

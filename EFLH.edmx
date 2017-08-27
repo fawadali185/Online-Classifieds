@@ -1,0 +1,611 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LH_newModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ad">
+          <Key>
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="adid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catid" Type="int" Nullable="false" />
+          <Property Name="lid" Type="int" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="250" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="address" Type="nvarchar" MaxLength="3000" />
+          <Property Name="datetime" Type="datetime" />
+          <Property Name="amount" Type="money" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="nvarchar" MaxLength="500" />
+          <Property Name="master_category" Type="nvarchar" MaxLength="500" />
+          <Property Name="category_descr" Type="nvarchar(max)" />
+          <Property Name="master_category_descr" Type="nvarchar(max)" />
+          <Property Name="editedby" Type="nvarchar" MaxLength="50" />
+          <Property Name="editedon" Type="datetime" />
+          <Property Name="master_category_icon" Type="nvarchar" MaxLength="250" />
+          <Property Name="lid" Type="int" />
+        </EntityType>
+        <EntityType Name="CustomRoles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Images">
+          <Key>
+            <PropertyRef Name="imageid" />
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="imageid" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="adid" Type="int" Nullable="false" />
+          <Property Name="src" Type="varchar" MaxLength="500" />
+          <Property Name="defaulti" Type="bit" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="city" Type="nvarchar" MaxLength="500" />
+          <Property Name="state_province" Type="nvarchar" MaxLength="500" />
+          <Property Name="area" Type="nvarchar" MaxLength="500" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="editedby" Type="nvarchar" MaxLength="50" />
+          <Property Name="editedon" Type="nvarchar" MaxLength="50" />
+          <Property Name="currency_symbol" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="error" Type="varchar" MaxLength="1500" />
+          <Property Name="source" Type="varchar" MaxLength="5000" />
+        </EntityType>
+        <EntityType Name="UserAd">
+          <Key>
+            <PropertyRef Name="adid" />
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="adid" Type="int" Nullable="false" />
+          <Property Name="userid" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar(max)" />
+          <Property Name="address" Type="nvarchar(max)" />
+          <Property Name="phone" Type="nvarchar(max)" />
+          <Property Name="details" Type="nvarchar(max)" />
+          <Property Name="password" Type="nvarchar(max)" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UsersCustomRoles">
+          <Key>
+            <PropertyRef Name="Users_Id" />
+            <PropertyRef Name="CustomRoles_Id" />
+          </Key>
+          <Property Name="Users_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomRoles_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Category__lid__34C8D9D1">
+          <End Role="Location" Type="Self.Location" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="lid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Images__adid__49C3F6B7">
+          <End Role="ad" Type="Self.ad" Multiplicity="1" />
+          <End Role="Images" Type="Self.Images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ad">
+              <PropertyRef Name="adid" />
+            </Principal>
+            <Dependent Role="Images">
+              <PropertyRef Name="adid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ad_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="ad" Type="Self.ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ad">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ad_Location">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="ad" Type="Self.ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ad">
+              <PropertyRef Name="lid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UsersCustomRoles_dbo_CustomRoles_CustomRoles_Id">
+          <End Role="CustomRoles" Type="Self.CustomRoles" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersCustomRoles" Type="Self.UsersCustomRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCustomRoles">
+              <PropertyRef Name="CustomRoles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UsersCustomRoles_dbo_Users_Users_Id">
+          <End Role="Users" Type="Self.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsersCustomRoles" Type="Self.UsersCustomRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UsersCustomRoles">
+              <PropertyRef Name="Users_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAd_ad">
+          <End Role="ad" Type="Self.ad" Multiplicity="1" />
+          <End Role="UserAd" Type="Self.UserAd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ad">
+              <PropertyRef Name="adid" />
+            </Principal>
+            <Dependent Role="UserAd">
+              <PropertyRef Name="adid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserAd_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserAd" Type="Self.UserAd" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserAd">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="tes786" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="fawad" />
+        <Function Name="tes786_1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="fawad" />
+        <Function Name="tes786_2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="fawad" />
+        <Function Name="test321" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="fawad" />
+        <Function Name="test32121" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="fawad" />
+        <EntityContainer Name="LH_newModelStoreContainer">
+          <EntitySet Name="ad" EntityType="Self.ad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomRoles" EntityType="Self.CustomRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Images" EntityType="Self.Images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log" EntityType="Self.log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAd" EntityType="Self.UserAd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersCustomRoles" EntityType="Self.UsersCustomRoles" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Category__lid__34C8D9D1" Association="Self.FK__Category__lid__34C8D9D1">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Images__adid__49C3F6B7" Association="Self.FK__Images__adid__49C3F6B7">
+            <End Role="ad" EntitySet="ad" />
+            <End Role="Images" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ad_Category" Association="Self.FK_ad_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="ad" EntitySet="ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ad_Location" Association="Self.FK_ad_Location">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="ad" EntitySet="ad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UsersCustomRoles_dbo_CustomRoles_CustomRoles_Id" Association="Self.FK_dbo_UsersCustomRoles_dbo_CustomRoles_CustomRoles_Id">
+            <End Role="CustomRoles" EntitySet="CustomRoles" />
+            <End Role="UsersCustomRoles" EntitySet="UsersCustomRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UsersCustomRoles_dbo_Users_Users_Id" Association="Self.FK_dbo_UsersCustomRoles_dbo_Users_Users_Id">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCustomRoles" EntitySet="UsersCustomRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAd_ad" Association="Self.FK_UserAd_ad">
+            <End Role="ad" EntitySet="ad" />
+            <End Role="UserAd" EntitySet="UserAd" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserAd_Users" Association="Self.FK_UserAd_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserAd" EntitySet="UserAd" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LH_newModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="LH_newEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Images" EntityType="LH_newModel.Image" />
+          <EntitySet Name="CustomRoles" EntityType="LH_newModel.CustomRole" />
+          <EntitySet Name="Users" EntityType="LH_newModel.User" />
+          <AssociationSet Name="UsersCustomRoles" Association="LH_newModel.UsersCustomRoles">
+            <End Role="CustomRole" EntitySet="CustomRoles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Locations" EntityType="LH_newModel.Location" />
+          <EntitySet Name="Categories" EntityType="LH_newModel.Category" />
+          <AssociationSet Name="FK__Category__lid__34C8D9D1" Association="LH_newModel.FK__Category__lid__34C8D9D1">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <EntitySet Name="logs" EntityType="LH_newModel.log" />
+          <EntitySet Name="ads" EntityType="LH_newModel.ad" />
+          <AssociationSet Name="FK__Images__adid__49C3F6B7" Association="LH_newModel.FK__Images__adid__49C3F6B7">
+            <End Role="ad" EntitySet="ads" />
+            <End Role="Image" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ad_Category" Association="LH_newModel.FK_ad_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="ad" EntitySet="ads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ad_Location" Association="LH_newModel.FK_ad_Location">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="ad" EntitySet="ads" />
+          </AssociationSet>
+          <AssociationSet Name="UserAd" Association="LH_newModel.UserAd">
+            <End Role="ad" EntitySet="ads" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <FunctionImport Name="test321" />
+          <FunctionImport Name="test32121" ReturnType="Collection(LH_newModel.test32121_Result)" />
+          <FunctionImport Name="tes786" />
+          <FunctionImport Name="tes786_1" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="tes786_2" ReturnType="Collection(LH_newModel.tes786_2_3333)" />
+          </EntityContainer>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="imageid" />
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="imageid" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="adid" Type="Int32" Nullable="false" />
+          <Property Name="src" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="defaulti" Type="Boolean" />
+          <NavigationProperty Name="ad" Relationship="LH_newModel.FK__Images__adid__49C3F6B7" FromRole="Image" ToRole="ad" />
+        </EntityType>
+        <EntityType Name="CustomRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="LH_newModel.UsersCustomRoles" FromRole="CustomRole" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CustomRoles" Relationship="LH_newModel.UsersCustomRoles" FromRole="User" ToRole="CustomRole" />
+          <NavigationProperty Name="ads" Relationship="LH_newModel.UserAd" FromRole="User" ToRole="ad" />
+        </EntityType>
+        <Association Name="UsersCustomRoles">
+          <End Type="LH_newModel.CustomRole" Role="CustomRole" Multiplicity="*" />
+          <End Type="LH_newModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="city" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="state_province" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="area" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="editedby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="editedon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="currency_symbol" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categories" Relationship="LH_newModel.FK__Category__lid__34C8D9D1" FromRole="Location" ToRole="Category" />
+          <NavigationProperty Name="ads" Relationship="LH_newModel.FK_ad_Location" FromRole="Location" ToRole="ad" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="master_category" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="category_descr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="master_category_descr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="editedby" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="editedon" Type="DateTime" Precision="3" />
+          <Property Name="master_category_icon" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="lid" Type="Int32" />
+          <NavigationProperty Name="Location" Relationship="LH_newModel.FK__Category__lid__34C8D9D1" FromRole="Category" ToRole="Location" />
+          <NavigationProperty Name="ads" Relationship="LH_newModel.FK_ad_Category" FromRole="Category" ToRole="ad" />
+        </EntityType>
+        <Association Name="FK__Category__lid__34C8D9D1">
+          <End Type="LH_newModel.Location" Role="Location" Multiplicity="0..1" />
+          <End Type="LH_newModel.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="lid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="error" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="source" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ad">
+          <Key>
+            <PropertyRef Name="adid" />
+          </Key>
+          <Property Name="adid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catid" Type="Int32" Nullable="false" />
+          <Property Name="lid" Type="Int32" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
+          <Property Name="datetime" Type="DateTime" Precision="3" />
+          <Property Name="amount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Images" Relationship="LH_newModel.FK__Images__adid__49C3F6B7" FromRole="ad" ToRole="Image" />
+          <NavigationProperty Name="Category" Relationship="LH_newModel.FK_ad_Category" FromRole="ad" ToRole="Category" />
+          <NavigationProperty Name="Location" Relationship="LH_newModel.FK_ad_Location" FromRole="ad" ToRole="Location" />
+          <NavigationProperty Name="Users" Relationship="LH_newModel.UserAd" FromRole="ad" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__Images__adid__49C3F6B7">
+          <End Type="LH_newModel.ad" Role="ad" Multiplicity="1" />
+          <End Type="LH_newModel.Image" Role="Image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ad">
+              <PropertyRef Name="adid" />
+            </Principal>
+            <Dependent Role="Image">
+              <PropertyRef Name="adid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ad_Category">
+          <End Type="LH_newModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="LH_newModel.ad" Role="ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ad">
+              <PropertyRef Name="catid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ad_Location">
+          <End Type="LH_newModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="LH_newModel.ad" Role="ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ad">
+              <PropertyRef Name="lid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAd">
+          <End Type="LH_newModel.ad" Role="ad" Multiplicity="*" />
+          <End Type="LH_newModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <ComplexType Name="test32121_Result">
+          <Property Type="Int32" Name="adid" Nullable="false" />
+          <Property Type="Int32" Name="catid" Nullable="false" />
+          <Property Type="Int32" Name="lid" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="String" Name="phone" Nullable="true" MaxLength="250" />
+          <Property Type="String" Name="address" Nullable="true" MaxLength="3000" />
+          <Property Type="DateTime" Name="datetime" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="19" />
+          <Property Type="String" Name="email" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="tes786_2_3333">
+          <Property Type="Int32" Name="adid" Nullable="false" />
+        </ComplexType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LH_newModelStoreContainer" CdmEntityContainer="LH_newEntities">
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="LH_newModel.Image">
+              <MappingFragment StoreEntitySet="Images">
+                <ScalarProperty Name="defaulti" ColumnName="defaulti" />
+                <ScalarProperty Name="src" ColumnName="src" />
+                <ScalarProperty Name="adid" ColumnName="adid" />
+                <ScalarProperty Name="imageid" ColumnName="imageid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomRoles">
+            <EntityTypeMapping TypeName="LH_newModel.CustomRole">
+              <MappingFragment StoreEntitySet="CustomRoles">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="LH_newModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="details" ColumnName="details" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UsersCustomRoles" TypeName="LH_newModel.UsersCustomRoles" StoreEntitySet="UsersCustomRoles">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="Users_Id" />
+            </EndProperty>
+            <EndProperty Name="CustomRole">
+              <ScalarProperty Name="Id" ColumnName="CustomRoles_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="LH_newModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="currency_symbol" ColumnName="currency_symbol" />
+                <ScalarProperty Name="editedon" ColumnName="editedon" />
+                <ScalarProperty Name="editedby" ColumnName="editedby" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="state_province" ColumnName="state_province" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LH_newModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="lid" ColumnName="lid" />
+                <ScalarProperty Name="master_category_icon" ColumnName="master_category_icon" />
+                <ScalarProperty Name="editedon" ColumnName="editedon" />
+                <ScalarProperty Name="editedby" ColumnName="editedby" />
+                <ScalarProperty Name="master_category_descr" ColumnName="master_category_descr" />
+                <ScalarProperty Name="category_descr" ColumnName="category_descr" />
+                <ScalarProperty Name="master_category" ColumnName="master_category" />
+                <ScalarProperty Name="category1" ColumnName="category" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="logs">
+            <EntityTypeMapping TypeName="LH_newModel.log">
+              <MappingFragment StoreEntitySet="log">
+                <ScalarProperty Name="source" ColumnName="source" />
+                <ScalarProperty Name="error" ColumnName="error" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ads">
+            <EntityTypeMapping TypeName="LH_newModel.ad">
+              <MappingFragment StoreEntitySet="ad">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="lid" ColumnName="lid" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="adid" ColumnName="adid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserAd" TypeName="LH_newModel.UserAd" StoreEntitySet="UserAd">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="userid" />
+            </EndProperty>
+            <EndProperty Name="ad">
+              <ScalarProperty Name="adid" ColumnName="adid" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="test321" FunctionName="LH_newModel.Store.test321" />
+          <FunctionImportMapping FunctionImportName="test32121" FunctionName="LH_newModel.Store.test32121">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LH_newModel.test32121_Result">
+                <ScalarProperty Name="adid" ColumnName="adid" />
+                <ScalarProperty Name="catid" ColumnName="catid" />
+                <ScalarProperty Name="lid" ColumnName="lid" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="datetime" ColumnName="datetime" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="tes786" FunctionName="LH_newModel.Store.tes786" />
+          <FunctionImportMapping FunctionImportName="tes786_1" FunctionName="LH_newModel.Store.tes786_1" />
+          <FunctionImportMapping FunctionImportName="tes786_2" FunctionName="LH_newModel.Store.tes786_2" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LH_newModel.tes786_2_3333">
+                <ScalarProperty Name="adid" ColumnName="adid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

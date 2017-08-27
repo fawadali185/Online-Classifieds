@@ -1,0 +1,160 @@
+﻿@model IEnumerable<ListHell.CODE.AdsModel>
+
+@{
+    ViewBag.Title = "GetAdsByUsers";
+}
+
+<h2>GetAdsByUsers</h2>
+
+@if (Model.Count() == 0)
+{
+    <h3>Post something first to View/Edit/Delete your ads</h3>
+    <h5>To Post an ad click Main link above and follow the directions</h5>
+}
+else
+{
+<table class="table">
+    <tr>
+        @*<th>
+            @Html.DisplayNameFor(model => model.adid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.catid)
+        </th>*@
+        <th>
+            Image
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.catname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.locname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.areaname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.amount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.imageid)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.cat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mastercat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.catdescr)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <img style="width:120px;height:100px" src="@item.src" />
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.adid)
+            @Html.HiddenFor(modelItem => item.lid)
+            @Html.HiddenFor(modelItem => item.catid)
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phone)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.catname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.locname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.areaname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.amount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.imageid)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.cat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mastercat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.catdescr)
+        </td>
+        <td>
+            @Html.ActionLink("BasicEdit", "updateAd", new { adid = item.adid, catid = item.catid, lid = item.lid }, new { style = "font-size:10px" } /* id=item.PrimaryKey */ )
+            @Html.ActionLink("Details", "getUserAdDetails", new { adid = item.adid, catid = item.catid, lid = item.lid }, new { style = "font-size:10px" })
+            @Html.ActionLink("Delete", "DeleteUserAd", new { adid = item.adid, catid = item.catid, lid = item.lid }, new { style = "font-size:10px" })
+        </td>
+    </tr>
+}
+
+
+
+</table>}
+@section Scripts{
+<script>
+    $(document).ready(function () {
+        $("a").click(function () {
+            if ($(this).text() == "Delete" || $(this).html() == "Delete") {
+                var r = confirm("are u sure to delete this ad");
+                if (!r) {
+                    return false;
+                }
+
+            }
+
+        })
+        if (getParameterByName("posted") == "true") {
+            alert("ad deleted successfully");
+        }
+
+    })
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+</script>}

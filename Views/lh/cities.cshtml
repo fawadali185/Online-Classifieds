@@ -1,0 +1,69 @@
+﻿@model IEnumerable<ListHell.CODE.Locations>
+
+@{
+    ViewBag.Title = "cities";
+}
+<div ng-app="LH" ng-controller="LHController" >
+  
+    <span style="color:red;font-size:small">To Post an ad OR to view ads. Select city</span>
+    <div style="font-size:small;background-color:#f2f2f2">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.city)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.state_province)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.area)
+                </th>
+                <th>
+                    No. of Ads
+                </th>
+
+
+
+            </tr>
+
+            @foreach (var item in Model)
+        {
+
+                <tr>
+                    <td>
+                        <a href="#" data-val="@item.id" ng-click="selectLocation(@item.id,'@item.city')">
+                            @Html.DisplayFor(modelItem => item.city)
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.state_province)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.area)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+
+
+                </tr>
+        }
+
+        </table>
+    </div></div>
+@Scripts.Render("~/bundles/angular")
+<script src="~/Scripts/cookies.js"></script>
+<script>
+    var l;
+    var v;
+    var app = angular.module('LH', []);
+    app.controller("LHController", function ($scope, $window) {
+        v = $scope;
+        $scope.selectLocation = function (id,city) {
+			 $.cookie("city", city, { path: '/', expires: 365 });
+            save("lid", id);
+            $window.open("../lh/categories?lid="+id, "_self");
+        }   
+    });
+    $(document).ready(function () { $("#btnPost").remove(); })
+</script>

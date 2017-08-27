@@ -1,0 +1,73 @@
+﻿@model ListHell.CODE.UserDetailedAd
+
+<div class="" style="display:inline-grid;width:100%">
+    @Html.Partial("_search")
+    </div>
+    <div>
+        
+        <hr />
+        <div class="container" style="background-color:#f2f2f2;font-size:small">
+            <div class="col-lg-3 col-md-1 col-sm-1 col-xs-1" style="width:155px">
+                @if (Model.images.Count() > 0)
+            { <img src="@Model.images.ElementAt(0).src" id="frame" style="width:150px;" />}
+                @foreach (var img in Model.images)
+                {
+                    <img src="@img.src" onclick="javascript: $('#frame').attr('src', '@img.src')" id="i&@img.imageid" style="width:50px;cursor:pointer" />
+                }
+            </div>
+
+            <dl class="col-lg-3 col-md-1 col-sm-1 col-xs-1" style="border:double;    margin:35px 35px 35px 35px;width:400px">
+
+
+                <span>
+                    @Html.DisplayNameFor(model => model.title)
+                </span>
+
+                <span>
+                    @Html.DisplayFor(model => model.title)
+                </span>
+                <br />
+
+                <span>
+                    @Html.DisplayNameFor(model => model.description)
+                </span>
+
+
+                <span>
+                    @Html.DisplayFor(model => model.description)
+                </span>
+                <br />
+                <span>
+                    @Html.DisplayNameFor(model => model.address)
+                </span>
+
+                <span>
+                    @Html.DisplayFor(model => model.address)
+                </span>
+                <br />
+                <span>
+                    @Html.DisplayNameFor(model => model.amount)
+                </span>
+
+                <span>
+                    @Html.DisplayFor(model => model.amount)
+                </span>
+
+                <br />
+                <span>Date Posted</span>
+
+
+
+                <span>
+                    @Html.DisplayFor(model => model.dt)
+                </span>
+
+
+            </dl>
+            <div class="col-lg-3 col-md-1 col-sm-1 col-xs-1">
+                <input type="button" onclick="javascript:$(this).attr('value','@Model.phone')" value="Phone" />
+                <input type="button" onclick="javascript:$(this).attr('value','@Model.email')" value="Email" />
+            </div>
+        </div>
+
+    </div>
