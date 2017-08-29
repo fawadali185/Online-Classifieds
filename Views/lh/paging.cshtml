@@ -34,15 +34,15 @@
         var x, y = "";
         var st = 1;
         var end = 3;
-        $(".pager").html("<li>")
+        
         var i = parseInt($.cookie("count")) / 10
         var cp = parseInt($.cookie("cp"));
         if ((cp-3)>0) {
             x == "...";
             if (cp > 1) {
-                $("ul").append("<li><a href='paging?cp=" + parseInt(cp - 1) + "'  style='cursor:pointer'> Prev </a></li>");
+                $(".pager").append("<li><a href='paging?cp=" + parseInt(cp - 1) + "'  style='cursor:pointer'> Prev </a></li>");
             }
-            $("ul").append("<li><a href='paging?cp=" + parseInt(cp -3) + "'  style='cursor:pointer'>...</a></li>");
+            $(".pager").append("<li><a href='paging?cp=" + parseInt(cp - 3) + "'  style='cursor:pointer'>...</a></li>");
             st = cp;
             end=cp+3;
         }
@@ -52,13 +52,13 @@
             if (a == parseInt($.cookie("cp"))) {
                 $(".pager").append("<li><a href='paging?cp=" + a.toString() + "'><b>" + a.toString() + "</b></a></li>")
             }
-            else { $("ul").append("<li><a href='paging?cp=" + a.toString() + "'>" + a.toString() + "</a></li>") }
+            else { $(".pager").append("<li><a href='paging?cp=" + a.toString() + "'>" + a.toString() + "</a></li>") }
 
         }
         if (cp + 3 < i) {
-            $("ul").append("<li><a href='paging?cp=" + parseInt(cp + 3) + "' style='cursor:pointer'>...</li>");
+            $(".pager").append("<li><a href='paging?cp=" + parseInt(cp + 3) + "' style='cursor:pointer'>...</li>");
             if (cp + 3 < i + 1) {
-                $("ul").append("<li><a href='paging?cp=" + parseInt(cp + 1) + "' style='cursor:pointer'> Next </li>");
+                $(".pager").append("<li><a href='paging?cp=" + parseInt(cp + 1) + "' style='cursor:pointer'> Next </li>");
             }
         }
         
